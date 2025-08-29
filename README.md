@@ -1,10 +1,8 @@
-# The-Ramen-Rater
-Practice repository for creating .rmd files and publishing a webpage.
-
-The data used in this repository is from The Ramen Rater (https://www.theramenrater.com/) and The Big List (https://www.theramenrater.com/resources-2/the-list/)
+# The Ramen Rater
+Practice repository for creating .rmd files and publishing a webpage
 
 # Resources Utilized
-Below are some resources I found helpful while creating the webpage
+Below are some resources I found helpful!
 
 ## Theme and Formating
 
@@ -27,3 +25,5 @@ Below are some resources I found helpful while creating the webpage
 ## Dataset
 
 * https://www.kaggle.com/datasets
+* https://www.theramenrater.com/
+* https://www.theramenrater.com/resources-2/the-list/
