@@ -1,17 +1,46 @@
 ---
 title: "The Ramen Rater: Unpackaged"
 author: "Sienna Solis-Stokes"
-date: "`r Sys.Date()`"
 output:
   html_document:
-    self_contained: true
-    toc: yes
-    toc_depth: 1
-    number_sections: false
-    toc_float:
-      collapsed: false
-      smooth_scroll: true
+    toc: true
+    toc_float: true
+    theme:
+      success: "#d9534f"
+      base_font: 
+        google: "Lora"
+      heading_font: 
+        google: "Lora"
+      bootswatch: sandstone
+      bslib: true
 ---
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 16px;
+      text-align: justified;
+}
+.author {
+  font-size: 14px;
+  color: #8e8c84;
+  text-align: center;
+}
+h1.title { /* Title*/
+  font-size: 42px;
+  color: Black;
+  text-align: center;
+}
+h1 { /* Header 1 */
+  font-size: 30px;
+  color: Black;
+  font-weight: bold;
+}
+p.caption{
+  font: Lora;
+  font-size: 14px;
+}
+</style>
+
 
 ```{r setup, include=FALSE}
 # set up area for loading libraries/packages
@@ -30,21 +59,25 @@ library(maps)
 library(dplyr)
 library(cowplot)
 library(magick)
+library(showtext)
 
 data_ramen <- read.csv("the-ramen-rater.csv")
 data_ramen$stars <- as.numeric(data_ramen$stars)
 
 #knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
 <center>![](images/ramen-header.jpeg)</center>
 
 # The Ramen Rater
 Instant ramen is more than survival food — it’s a global industry with hardcore enthusiasts. AKA *ramenphiles*. 
 
 
-Since 2002, Hans Lienesch has been rating ramen on his blog [The Ramen Rater](https://www.theramenrater.com/). For a decade he posted daily reviews, and in 2012 he was interviewed by a local newspaper when his blog gained a cult following surrounding [The Big List](https://www.theramenrater.com/resources-2/the-list/).
+Since 2002, Hans Lienesch has been rating ramen on his blog **[The Ramen Rater](https://www.theramenrater.com/)**. For a decade he posted daily reviews, and in 2012 he was interviewed by a local newspaper when his blog gained a cult following surrounding **[The Big List](https://www.theramenrater.com/resources-2/the-list/)**.
 
 <center>![](images/hans.jpg){width=125%}</center>
+
 
 
 The Big List is just what it sounds like; a big list of all the ramen he has reviewed for 20+ years. 
@@ -59,8 +92,8 @@ I'll be using The Big List to unleash my inner *ramenphile* and answer some burn
 
 Let's get to know our reviewer first. Is he a harsh critic? 
 
-**The Ramen Rater** rates on a 1-5 star scale. Let's look at his stats.
-```{r Star Distribution, echo=FALSE, message=FALSE, warning=FALSE}
+The Ramen Rater rates on a 1-5 star scale. Let's look at his stats.
+```{r Star Distribution, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # make sure data doesn't include NAs
 data_ramen <- 
   data_ramen %>%
@@ -68,23 +101,27 @@ data_ramen <-
     filter(!is.na(stars))
 
 # plot the data
+font_add_google("Lora", "lora_font")  # so the graph font will match the rest of the blog
+showtext_auto()  
+
 ggplot(data_ramen, aes(x = stars)) +
-    geom_histogram(binwidth = 0.5, fill = "#d95f02", color = "black" ) +       
-    scale_x_continuous(breaks = seq(1, 5, 0.5), limits = c(1,5.5), expand = c(0,0)) + # adjusting axes for aesthetics
-    scale_y_continuous(breaks = seq(0, 2000, 250), expand = c(0,0)) +
-      labs(
-         title = "Distribution of Ratings",
-         x = "Star Rating",
-         y = "Number of Reviews") +
+  geom_histogram(binwidth = 0.5, fill = "#d95f02", color = "black" ) +       
+  scale_x_continuous(breaks = seq(1, 5, 0.5), limits = c(1,5.5), expand = c(0,0)) + # adjusting axes for aesthetics
+  scale_y_continuous(breaks = seq(0, 2000, 250), expand = c(0,0)) +
+  labs(
+    title = "Distribution of Ratings",
+    x = "Star Rating",
+    y = "Number of Reviews") +
   theme_minimal(base_size = 14) +
-    theme(
-      plot.title = element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20)), # hjust/margin: title placement
-      axis.title.x = element_text(face = "bold", color = "#666", size = 13),
-      axis.title.y = element_text(face = "bold", color = "#666", size = 13),
-      axis.line = element_line(linewidth = 1),
-      panel.grid.major.y = element_blank(),   # remove horizontal gridlines
-      panel.grid.minor = element_blank()) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20), family = "lora_font", size = 24, color = "#666"), # margin: title placement
+    axis.title.x = element_text(color = "#666", size = 20, family = "lora_font"),
+    axis.title.y = element_text(color = "#666", size = 20,family = "lora_font"),
+    axis.line = element_line(linewidth = 1),
+    panel.grid.major.y = element_blank(),   # remove horizontal gridlines
+    panel.grid.minor = element_blank()) +
   coord_flip()
+
 
 ggsave("fig_ramen-star-distribution.png")
 
@@ -92,21 +129,21 @@ ggsave("fig_ramen-star-distribution.png")
 ```
 
 
-We can see that **The Ramen Rater** has had some pretty low rated ramens. But on the other hand, he clearly isn't shy about giving out his 5-star ratings. Overall he shows a strong "middle of the road" rating average.
+We can see that The Ramen Rater has had some pretty low rated ramens. But on the other hand, he clearly isn't shy about giving out his 5-star ratings. Overall he shows a strong "middle of the road" rating average.
 
 
 # The Ramen Rater Stats
 
-We know that **The Ramen Rater** has been reviewing ramen for more than two decades. I wonder if he has gotten "nicer" or "harsher" over the years. We're going to run a linear model to see if we can show if **The Ramen Rater** has stayed consistent.
+We know that The Ramen Rater has been reviewing ramen for more than two decades. I wonder if he has gotten "nicer" or "harsher" over the years. We're going to run a linear model to see if we can show if The Ramen Rater has stayed consistent.
 
 First let's visualize the ratings of all reviews over time.
-```{r Ratings Over Time - plot, echo=TRUE, message=TRUE, warning=TRUE}
-model_review.stars <- plot(stars~review, data_ramen)
+```{r Ratings Over Time - plot, echo=TRUE, message=TRUE, warning=TRUE, fig.align='center'}
+plot(stars~review, data_ramen)
 ```
 
 This is a bit hard to interpret let's try and simplify the visual.
 
-```{r ggplot for Model, echo=FALSE, message=FALSE, warning=FALSE}
+```{r ggplot for Model, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # plot the data for visual
 # put the reviews into bins of 100 for visual clarity
 data_binned <- data_ramen %>%
@@ -125,40 +162,40 @@ ggplot(data_binned, aes(x = review.bin, y = mean.stars)) +
     y = "Average Star Rating" ) +
   theme_minimal(base_size = 14) +
   theme(
-    plot.title= element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20)), # hjust & margin: title placement
-  axis.title.x = element_text(face = "bold", color = "#666", size = 13),                   # formatting to look cohesive
-  axis.title.y = element_text(face = "bold", color = "#666", size = 13),
+    plot.title= element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20), size = 24, family = "lora_font", color = "#666"), # hjust & margin: title placement
+  axis.title.x = element_text(color = "#666", size = 20, family = "lora_font"),                   # formatting to look cohesive
+  axis.title.y = element_text(color = "#666", size = 20, family = "lora_font"),
   axis.line = element_line(linewidth = 1),
   panel.grid.major.x = element_blank())   
 
 ggsave("fig_ramen-ratings-time.png")
 ```
 
-Now we can look at what the statistics say to get to the bottom of **The Ramen Rater's** consistency.
+Now we can look at what the statistics say to get to the bottom of The Ramen Rater's consistency.
 
-```{r Model and Summary Stats, echo=TRUE, message=FALSE, warning=FALSE}
+```{r Model and Summary Stats, echo=TRUE, message=FALSE, warning=FALSE, fig.align='center'}
 model_ratings.time <- lm(stars~review, data = data_ramen)
 anova(model_ratings.time)
 summary(model_ratings.time)
 
 ```
-Results show that **The Ramen Rater's** reviews have shifted slightly upward over time (F = 70.63, p <0.001). 
+Results show that The Ramen Rater's reviews have shifted slightly upward over time (F = 70.63, p <0.001). 
 
 In the early days, ratings averaged about 3.5 stars. Every 1,000 reviews corresponds to an increase of about 0.09 stars, which means that by his most recent reviews his average rating has increased by roughly 0.4 stars. 
 
-Statistically this is significant, but there may be other factors at play here. Maybe **The Ramen Rater** is just eating higher quality ramen now or maybe his love for ramen biases his reviews. Or (as one of my friends suggested) he's had such terrible ramen that his standards for decent ramen have shifted.
+Statistically this is significant, but there may be other factors at play here. Maybe The Ramen Rater is just eating higher quality ramen now or maybe his love for ramen biases his reviews. Or (as one of my friends suggested) he's had such terrible ramen that his standards for decent ramen have shifted.
 
-Whatever the case may be, I feel pretty content with **The Ramen Rater** as a reliable and consistent ramen reviewer.
+Whatever the case may be, I feel pretty content with The Ramen Rater as a reliable and consistent ramen reviewer.
 
 
 # Cups, Bowls, Boxes, and Packs
 
-Let's dive a little deeper into **The Ramen Rater's** psyche, shall we? 
+Let's dive a little deeper into The Ramen Rater psyche, shall we? 
 
 We can learn a bit about his preferences by looking at the different styles of ramen he's reviewed. 
-There are 4 styles of ramen consumed and reviewed by **The Ramen Rater**: *cup, bowl, box and pack*. 
+There are 4 styles of represented in the reviews: *cup, bowl, box and pack*. 
 
-```{r Image Grid of Ramen Styles, message=FALSE, warning=FALSE, echo=FALSE, paged.print=FALSE}
+```{r Image Grid of Ramen Styles, message=FALSE, warning=FALSE, echo=FALSE, paged.print=FALSE, fig.align='center'}
 
 plot_grid(
   ggdraw() + draw_image("images/cup-noodle.jpeg"),
@@ -169,14 +206,15 @@ plot_grid(
 
 ```
 
-I want to see if **The Ramen Rater** rated a certain style higher than the others.
+I want to see if The Ramen Rater rated a certain style higher than the others.
 
-Just looking at this plot, we might think that **The Ramen Rater** has rated box-style ramen the highest the most frequently. 
+Just looking at this plot, we might think that The Ramen Rater has rated box-style ramen the highest the most frequently. 
+
 Time to try that Lipton *Cup-a-Soup*! 
 
 However, there is a little bit of sample size discrepancy going on here.
 
-```{r Styles and Preference, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Styles and Preference, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 #### rating by style ####
 
 # get summmaries
@@ -201,9 +239,9 @@ ggplot(sum_style, aes(x = reorder(style, mean.stars), y = mean.stars)) +
       y = "Average Star Rating") +
   theme_minimal(base_size = 14) +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20)),    # formatting for aesthetics
-    axis.title.x = element_text(face = "bold", color = "#666", size = 13),
-    axis.title.y = element_text(face = "bold", color = "#666", size = 13),
+    plot.title = element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20), size = 24, family = "lora_font", color = "#666"),    # formatting for aesthetics
+    axis.title.x = element_text(color = "#666", size = 20, family = "lora_font"),
+    axis.title.y = element_text(color = "#666", size = 20, family = "lora_font"),
     axis.line = element_line(linewidth = 1),
     panel.grid.major.x = element_blank())   
 
@@ -219,10 +257,10 @@ box <- style_counts ["Box"]
 
 ```
 
-**The Ramen Rater** reviewed `r scales::comma(cups)` cups, `r scales::comma(bowl)` bowls, `r scales::comma(pack)` packs, and only `r scales::comma(box)` boxes.
+The Ramen Rater reviewed `r scales::comma(cups)` cups, `r scales::comma(bowl)` bowls, `r scales::comma(pack)` packs, and only `r scales::comma(box)` boxes.
 
 Let's plot the data again, this time excluding the boxes from our dataset.
-```{r Styles and Preferece; NO BOX, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r Styles and Preferece; NO BOX, echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.align='center'}
 #### plot without the box ####
 
 # remove the boxes from the summary table
@@ -242,9 +280,9 @@ ggplot(sum_style_no_box, aes(x = reorder(style, mean.stars), y = mean.stars)) +
   annotate("text", x = c(1.15, 2.15, 3.15), y = c(3.486, 3.67, 3.85), label = c ("3.48", "3.67", "3.85"), color = "#666") +
   theme_minimal(base_size = 14) +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20)),
-    axis.title.x = element_text(face = "bold", color = "#666", size = 13),
-    axis.title.y = element_text(face = "bold", color = "#666", size = 13),
+    plot.title = element_text(hjust = 0.5, face = "bold", margin = margin(t = 20, b = 20), size = 24, family = "lora_font", color = "#666"),
+    axis.title.x = element_text(color = "#666", size = 20),
+    axis.title.y = element_text(color = "#666", size = 20),
     axis.line = element_line(linewidth = 1),
     panel.grid.major.x = element_blank())   
 
@@ -252,18 +290,21 @@ ggsave("fig_ramen-style-rating-nobox.png")
 
 ```
 
-From this figure, we can see that on average **The Ramen Rater** rated the pack-style ramen the highest. 
+From this figure, we can see that on average The Ramen Rater rated the pack-style ramen the highest. 
 
-I personally agree with this, I was raised on Chicken Flavor Top Ramen and I still crave it every time I'm feeling a little under the weather. 
+I personally agree with this, I was raised on **Chicken Flavor** Top Ramen and I still crave it every time I'm feeling a little under the weather. 
 
 
 # Top Ten Lists
 
-Okay, so we've learned that pack-style ramen is Queen of the Ramen Rater universe. But what about all the different *brands* **The Ramen Rater** has reviewed?  
+Okay, so we've learned that pack-style ramen is Queen of the Ramen Rater universe. 
+
+But what about all the different brands The Ramen Rater has reviewed?  
 
 Below is a table of the most consistently Ramen Rater loved pack-style brands for your next ramen hankerings.
 
-```{r Pack by Brands Table, echo=FALSE, message=FALSE, warning=FALSE}
+
+```{r Pack by Brands Table, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # summarise the data
 sum_brands_pack <-
   data_ramen %>%
@@ -281,21 +322,23 @@ sum_brands_pack <-
   caption = "Table 1. Top 10 highest-rated brands of pack-style ramen with at least 15 reviews.",
   align = c("l","r")) %>%
   kable_classic() %>%
-  column_spec(1, bold = TRUE)
+  column_spec(1, bold = TRUE) %>%
+    kable_styling(html_font = "lora_font")
 
 ```
-I'm a little disappointed to not see any of my favs on the list, but I will admit that my repertoire of ramen is not nearly as impressive as **The Ramen Rater**.
+
+I'm a little disappointed to not see any of my favs on the list, but I will admit that my repertoire of ramen is not nearly as impressive as The Ramen Rater.
 
 <center>![](images/my-kuali.jpg)</center>
 
-Looks like I'll be putting **MyKuali** on the grocery list! But can I? 
+Looks like I'll be putting *MyKuali* on the grocery list! But can I? 
 
 Where are theses brands manufactured? 
 
-We know that **The Ramen Rater** does international reviews. I'm curious which country manufactures the highest rated ramens. 
+We know that The Ramen Rater does international reviews. I'm curious which country manufactures the highest rated ramens. 
 
 Let's see:
-```{r Top 10 Rated Countries, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Top 10 Rated Countries, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # summarise the data 
 sum_top.countries <-
   data_ramen %>%
@@ -312,11 +355,12 @@ kbl(sum_top.countries,
     caption = "Table 2. Top 10 countries with the highest rated ramen.",
     align = c("l","r")) %>%
   kable_classic() %>%
-  column_spec(1, bold = TRUE)
+  column_spec(1, bold = TRUE)%>%
+    kable_styling(html_font = "lora_font")
 ```
 
 Malaysia is the country that manufactures the highest rated Ramen Rater ramens! 
-And coincidentally that's exactly where I'll have to air-ship my **MyKuali** ramen order from.
+And coincidentally that's exactly where I'll have to air-ship my *MyKuali* ramen order from.
 
 # Hidden Gems
 
@@ -325,7 +369,7 @@ As a newly indoctrinated *ramenphile* I want to know where the hidden gem ramens
 I've created a map that shows those countries which have a high star-rating average but also have less reviews overall to try and weed out those big countries (like the U.S and Japan). 
 
 Within each of those high rated countries you'll also find info about the top rated ramen brand in that country to inspire your future ramen shopping list. 
-```{r Hidden Gems Map, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Hidden Gems Map, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # setting standards for map
 min.country   <- 5      # at least this many reviews 
 max.country   <- 100    # at most this many reviews
@@ -391,12 +435,11 @@ lab <- sprintf( "<b>%s</b><br/>Avg: %s ★ &nbsp;|&nbsp; Reviews: %s<br/><i>Top 
 
 # create the leaflet map
 leaflet(gems_xy) %>%               
-  addProviderTiles(providers$CartoDB.DarkMatter) %>%          # dark basemap
+  addProviderTiles(providers$CartoDB.Positron) %>%          # basemap: https://leaflet-extras.github.io/leaflet-providers/preview/
   addCircleMarkers(lng = ~long, lat = ~lat,                   # adding circles at "gems"
     radius = 7,
-    stroke = TRUE, weight = 1,                                # formatting aesthetics
-    color = "#993404",          
-    fillColor = "#d95f02",    
+    stroke = TRUE, weight = 1,
+    fillColor = "Black",                                    # formatting aesthetics
     fillOpacity = 1.0,          
     label = lapply(lab, htmltools::HTML),                   # html code for label
     popup = lapply(lab, htmltools::HTML))                   # html code for hover feature 
