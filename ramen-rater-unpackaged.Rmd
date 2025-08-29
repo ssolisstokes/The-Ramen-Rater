@@ -123,7 +123,7 @@ ggplot(data_ramen, aes(x = stars)) +
   coord_flip()
 
 
-ggsave("fig_ramen-star-distribution.png")
+ggsave("figures/fig_ramen-star-distribution.png")
 
 
 ```
@@ -168,7 +168,7 @@ ggplot(data_binned, aes(x = review.bin, y = mean.stars)) +
   axis.line = element_line(linewidth = 1),
   panel.grid.major.x = element_blank())   
 
-ggsave("fig_ramen-ratings-time.png")
+ggsave("figures/fig_ramen-ratings-time.png")
 ```
 
 Now we can look at what the statistics say to get to the bottom of The Ramen Rater's consistency.
@@ -245,7 +245,7 @@ ggplot(sum_style, aes(x = reorder(style, mean.stars), y = mean.stars)) +
     axis.line = element_line(linewidth = 1),
     panel.grid.major.x = element_blank())   
 
-ggsave("fig_ramen-style-rating.png")
+ggsave("figures/fig_ramen-style-rating.png")
 
 #### style work###
 style_counts <- table(data_ramen$style)
@@ -286,7 +286,7 @@ ggplot(sum_style_no_box, aes(x = reorder(style, mean.stars), y = mean.stars)) +
     axis.line = element_line(linewidth = 1),
     panel.grid.major.x = element_blank())   
 
-ggsave("fig_ramen-style-rating-nobox.png")
+ggsave("figures/fig_ramen-style-rating-nobox.png")
 
 ```
 
