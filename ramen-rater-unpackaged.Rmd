@@ -179,7 +179,7 @@ anova(model_ratings.time)
 summary(model_ratings.time)
 
 ```
-Results show that The Ramen Rater's reviews have shifted slightly upward over time (F = 70.6, p < 0.001)
+Looking at these results we can see that The Ramen Rater's reviews have shifted slightly upward over time (F = 70.6, p < 0.001).
 
 In the early days, ratings averaged about 3.5 stars. Every 1,000 reviews corresponds to an increase of about 0.09 stars, which means that by his most recent reviews his average rating has increased by roughly 0.4 stars. 
 
@@ -190,7 +190,7 @@ Whatever the case may be, I feel pretty content with The Ramen Rater as a reliab
 
 # Cups, Bowls, Boxes, and Packs
 
-Let's dive a little deeper into The Ramen Rater psyche, shall we? 
+Let's dive a little deeper into The Ramen Rater's psyche, shall we? 
 
 We can learn a bit about his preferences by looking at the different styles of ramen he's reviewed. 
 There are 4 styles of ramen represented in the reviews: *cup, bowl, box and pack*. 
@@ -207,12 +207,6 @@ plot_grid(
 ```
 
 I want to see if The Ramen Rater rated a certain style higher than the others.
-
-Just looking at this plot, we might think that The Ramen Rater has rated box-style ramen the highest the most frequently. 
-
-Time to try that Lipton *Cup-a-Soup*! 
-
-However, there is a little bit of sample size discrepancy going on here.
 
 ```{r Styles and Preference, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 #### rating by style ####
@@ -256,7 +250,11 @@ pack <- style_counts ["Pack"]
 box <- style_counts ["Box"]
 
 ```
+Looking at this figure, we might think that The Ramen Rater has rated box-style ramen the highest the most frequently. 
 
+Time to try that Lipton *Cup-a-Soup*! 
+
+However, there is a little bit of sample size discrepancy going on here.
 The Ramen Rater reviewed `r scales::comma(cups)` cups, `r scales::comma(bowl)` bowls, `r scales::comma(pack)` packs, and only `r scales::comma(box)` boxes.
 
 Let's plot the data again, this time excluding the boxes from our dataset.
@@ -301,7 +299,7 @@ Okay, so we've learned that pack-style ramen is Queen of the Ramen Rater univers
 
 But what about all the different brands The Ramen Rater has reviewed?  
 
-Below is a table of the top 10 Ramen Rater pack-style ramen brands.
+Below is a table of the top 10 Ramen Rater pack-style ramen brands!
 
 
 ```{r Pack by Brands Table, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
@@ -335,7 +333,7 @@ Looks like I'll be putting *MyKuali* on the grocery list! But can I?
 
 Where are theses brands manufactured? 
 
-We know that The Ramen Rater does international reviews. I'm curious which country manufactures the highest rated ramens. 
+We know that The Ramen Rater does international reviews. I'm curious which country manufactures the highest rated ramens on average. 
 
 Let's see:
 ```{r Top 10 Rated Countries, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
@@ -352,15 +350,14 @@ sum_top.countries <-
             `Average Rating` = sprintf("%.2f", avg.stars))  # round to 2 decimals 
 
 kbl(sum_top.countries,
-    caption = "Table 2. Top 10 countries with the highest rated ramen.",
+    caption = "Table 2. Top 10 countries with the highest average star rating.",
     align = c("l","r")) %>%
   kable_classic() %>%
   column_spec(1, bold = TRUE)%>%
     kable_styling(html_font = "lora_font")
 ```
 
-Malaysia is the country that manufactures the highest rated Ramen Rater ramens! 
-And coincidentally that's exactly where I'll have to air-ship my *MyKuali* ramen order from.
+Malaysia is the country that manufactures the highest rated Ramen Rater ramens, and coincidentally that's exactly where I'll have to air-ship my *MyKuali* ramen order from.
 
 # Hidden Gems
 
@@ -368,7 +365,7 @@ As a newly indoctrinated *ramenphile* I want to know where to find the less main
 
 I've created a map below that shows countries which have a high star rating average but also have less reviews overall to try and find those hidden gems which might get overshadowed in a large dataset.
 
-Within each pin you'll find info about how many ramens The Ramen Rater has reviewed have been manufactured there, the overall star rating average, and the top rated ramen brand in that country to inspire your future shopping list. 
+Within each pin you'll find info about how many ramens The Ramen Rater has reviewed have been manufactured there, the overall star rating average, and the top rated ramen brand in that country to inspire your future shopping list!
 
 ```{r Hidden Gems Map, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # setting standards for map
@@ -450,7 +447,7 @@ leaflet(gems_xy) %>%
 # Take-Aways
 
 From instant packs to international hidden gems The Ramen Rater has created a ramen empire that inspires thousands of people on the daily.
-I know I'll be scouring the internet for ways to get my hands on his 5-star picks, and who knows maybe I'll even start my own blog. 
+I know I'll be scouring the internet for ways to get my hands on his 5-star picks, and who knows maybe I'll even start my own ramen-inspired blog. 
 
-I found this dataset on [Kaggle.com](https://www.kaggle.com/datasets?fileType=csv)! It's free and I barely scratched the surface on potential datasets to practice with, go check it out :)
+I found this dataset on [Kaggle.com](https://www.kaggle.com/datasets?fileType=csv). It's free and I barely scratched the surface on potential datasets to practice with, go check it out!
 <center>![](images/ramen-footer.jpg){width=25%}</center>
