@@ -179,7 +179,7 @@ anova(model_ratings.time)
 summary(model_ratings.time)
 
 ```
-Results show that The Ramen Rater's reviews have shifted slightly upward over time (F = 70.63, p <0.001). 
+Results show that The Ramen Rater's reviews have shifted slightly upward over time (F = 70.6, p < 0.001)
 
 In the early days, ratings averaged about 3.5 stars. Every 1,000 reviews corresponds to an increase of about 0.09 stars, which means that by his most recent reviews his average rating has increased by roughly 0.4 stars. 
 
@@ -193,7 +193,7 @@ Whatever the case may be, I feel pretty content with The Ramen Rater as a reliab
 Let's dive a little deeper into The Ramen Rater psyche, shall we? 
 
 We can learn a bit about his preferences by looking at the different styles of ramen he's reviewed. 
-There are 4 styles of represented in the reviews: *cup, bowl, box and pack*. 
+There are 4 styles of ramen represented in the reviews: *cup, bowl, box and pack*. 
 
 ```{r Image Grid of Ramen Styles, message=FALSE, warning=FALSE, echo=FALSE, paged.print=FALSE, fig.align='center'}
 
@@ -292,7 +292,7 @@ ggsave("figures/fig_ramen-style-rating-nobox.png")
 
 From this figure, we can see that on average The Ramen Rater rated the pack-style ramen the highest. 
 
-I personally agree with this, I was raised on **Chicken Flavor** Top Ramen and I still crave it every time I'm feeling a little under the weather. 
+I personally agree with this, I was raised on *Chicken Flavor* Top Ramen and I still crave it every time I'm feeling a little under the weather. 
 
 
 # Top Ten Lists
@@ -301,7 +301,7 @@ Okay, so we've learned that pack-style ramen is Queen of the Ramen Rater univers
 
 But what about all the different brands The Ramen Rater has reviewed?  
 
-Below is a table of the most consistently Ramen Rater loved pack-style brands for your next ramen hankerings.
+Below is a table of the top 10 Ramen Rater pack-style ramen brands.
 
 
 ```{r Pack by Brands Table, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
@@ -364,11 +364,12 @@ And coincidentally that's exactly where I'll have to air-ship my *MyKuali* ramen
 
 # Hidden Gems
 
-As a newly indoctrinated *ramenphile* I want to know where the hidden gem ramens are. 
+As a newly indoctrinated *ramenphile* I want to know where to find the less mainstream ramens are to really develop my palate.
 
-I've created a map that shows those countries which have a high star-rating average but also have less reviews overall to try and weed out those big countries (like the U.S and Japan). 
+I've created a map below that shows countries which have a high star rating average but also have less reviews overall to try and find those hidden gems which might get overshadowed in a large dataset.
 
-Within each of those high rated countries you'll also find info about the top rated ramen brand in that country to inspire your future ramen shopping list. 
+Within each pin you'll find info about how many ramens The Ramen Rater has reviewed have been manufactured there, the overall star rating average, and the top rated ramen brand in that country to inspire your future shopping list. 
+
 ```{r Hidden Gems Map, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # setting standards for map
 min.country   <- 5      # at least this many reviews 
@@ -448,7 +449,7 @@ leaflet(gems_xy) %>%
 
 # Take-Aways
 
-From instant packs to international hidden gems **The Ramen Rater** has created a ramen empire that inspires thousands of people on the daily.
+From instant packs to international hidden gems The Ramen Rater has created a ramen empire that inspires thousands of people on the daily.
 I know I'll be scouring the internet for ways to get my hands on his 5-star picks, and who knows maybe I'll even start my own blog. 
 
 I found this dataset on [Kaggle.com](https://www.kaggle.com/datasets?fileType=csv)! It's free and I barely scratched the surface on potential datasets to practice with, go check it out :)
